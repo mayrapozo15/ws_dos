@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<head>
+		<title>Registrar Usuario</title>
+		 <script src="{{ asset('Recursos/login.js') }}"></script>
+	</head>
+	<style></style>
+
+	<div class="card shadow-none">
+		<div class="card-header">
+			<div class="row flex-between-center">
+				<div class="col">
+					<div class="row">
+						<div class="col text-center">
+							<h4 class="mb-0 upper">Registrar Usuario</h4>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<center>
+			<div class="modal-body p-0">
+				<div class="p-4 py-0">
+					<div class="col-5 ">
+						<div class="row mb-3">
+							<label class="form-label" for="formEscuela">Escuela</label>
+							<select class="form-control" id="formEscuela" size="1" data-options='{"placeholder":true}'>
+								{% for escuela in escuelas %}
+									<option value="{{ escuela.id }}">{{ escuela.nombre }}</option>
+								{% endfor %}
+							</select>
+						</div>
+						<div class="row mb-3">
+							<label class="form-label" for="formUsuario">Usuario<span class="req">*</span>
+							</label>
+							<input class="form-control upper" id="formUsuario" type="text" required="required"/>
+						</div>
+						<div class="row mb-3">
+							<label class="form-label" for="formClave">Clave<span class="req">*</span>
+							</label>
+							<input class="form-control upper" id="formClave" type="text" required="required"/>
+						</div>
+						<div class="row mb-3">
+							<label class="form-label" for="formNombres">Nombes Y Apellidos Completos<span class="req">*</span>
+							</label>
+							<input class="form-control upper" id="formNombres" type="text" required="required"/>
+						</div>
+						<div class="row mb-3">
+							<label class="form-label" for="formRol">Seleccione Rol</label>
+							<select class="form-control" id="formRol">
+								{% for rol in roles %}
+									<option value="{{ rol.id }}">{{ rol.nombre }}</option>
+								{% endfor %}
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+		</center>
+		<center>
+			<div class="row">
+				<div class="col">
+					<button class="btn btn-outline-success" type="button" onclick="registrasUsuario();">
+						<i class="far fa-save"></i>Registrar</button>
+				</div>
+			</div>
+		</center>
+	</div>
+</div>{% endblock %}

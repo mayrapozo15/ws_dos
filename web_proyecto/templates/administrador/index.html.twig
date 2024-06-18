@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<head>
+		<title>Administar</title>
+		 <script src="{{ asset('Recursos/escuelas.js') }}"></script>
+	</head>
+	{# <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1056">
+		        <div class="toast fade" id="liveToast" role="alert" aria-live="assertive" aria-atomic="true">
+		            <div class="toast-header bg-primary text-white"><strong class="me-auto">Bootstrap</strong><small>11 mins ago</small>
+		            <button class="btn-close btn-close-white" type="button" data-bs-dismiss="toast" aria-label="Close"></button>
+		            </div>
+		            <div class="toast-body text-black">Hello, world! This is a toast message.</div>
+		        </div>
+		    	</div>
+			 #}
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item">
+					<a class="nav-link" href="/web_proyecto/public/index.php/administrador/escuelas">Escuelas</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/web_proyecto/public/index.php/administrador/categorias">Categorias</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/web_proyecto/public/index.php/administrador/usuarios">Usuarios</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/web_proyecto/public/index.php/administrador/alumnos">Alumnos</a>
+				</li>
+			</ul>
+			<ul
+				class="navbar-nav">
+				<li class="nav-item">
+					<a class="nav-link" href="/web_proyecto/public/index.php/login">Cerrar Sesión</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+{% endblock %}

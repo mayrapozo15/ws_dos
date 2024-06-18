@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<head>
+		<title>Título de tu página</title>
+		 <script src="{{ asset('Recursos/login.js') }}"></script>
+	</head>
+	<style></style>
+
+	<div class="card shadow-none">
+		<div class="card-header">
+			<div class="row flex-between-center">
+				<div class="col">
+					<div class="row">
+						<div class="col text-center">
+							<h4 class="mb-0 upper">Iniciar Sesión</h4>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<center>
+			<div class="modal-body p-0">
+				<div class="p-4 py-0">
+					<div class="col-5 ">
+						<div class="row mb-3">
+							<label for="usuario">Usuario:</label>
+							<input type="text" id="usuario" name="usuario" class="form-control">
+						</div>
+						<div class="row mb-3">
+							<label for="clave">Contraseña:</label>
+							<input type="password" id="clave" name="clave" class="form-control">
+						</div>
+					</div>
+				</div>
+			</div>
+		</center>
+		<center>
+			<div class="row">
+				<div class="col">
+					<button class="btn btn-outline-success" type="button" onclick="iniciarSesion();">
+						<i class="far fa-save"></i>Ingresar</button>
+					
+				</div>
+				{#aqui le ingreso el boton registrar#}
+				<div class="col">
+					<a href="/web_proyecto/public/index.php/registrar">Registrarse aqui</a>
+				</div>
+			</div>
+		</center>
+	</div>
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<head>
+		<title>Escuelas</title>
+		 <script src="{{ asset('Recursos/escuelas.js') }}"></script>
+	</head>
+	<div class="row p-1 d-flex justify-content-between">
+		<div>
+			<button class="btn btn-outline-warning" type="button">
+				<a class="nav-link" href="/web_proyecto/public/index.php/administrador">Regresar</a>
+			</button>
+		</div>
+		<div>
+			<button class="btn btn-outline-info" type="button">
+				<a class="nav-link" href="/web_proyecto/public/index.php/login">Cerrar Sesión</a>
+			</button>
+		</div>
+	</div>
+	<div class="justify-content-center text-center">
+		<h1>Listado de Escuelas</h1>
+	</div>
+	<div class="row p-4">
+		<button class="btn btn-outline-success" type="button" onclick="limpiarModal()">
+			<i class="fas fa-times"></i>
+			Nuevo
+		</button>
+	</div>
+	<table class="table table-sm mb-0 data-general fs--1">
+		<thead class="bg-200 text-900">
+			<tr>
+				<th class="sort pe-1 align-middle">#</th>
+				<th class="sort pe-1 align-middle">Nombre</th>
+				<th class="sort pe-1 align-middle">Dirección</th>
+				<th class="sort pe-1 align-middle">Categoría</th>
+				<th class="sort pe-1 align-middle">Opciones</th>
+			</tr>
+		</thead>
+		<tbody class="list" id="table-number-pagination-body">
+			{% for escuela in escuelas %}
+				<tr class="btn-reveal-trigger" id="tr{{ escuela.id }}">
+					<td class="align-middlewhite-space-nowrap">{{ loop.index }}</td>
+					<td class="align-middlewhite-space-nowrap">{{ escuela.nombre }}</td>
+					<td class="align-middlewhite-space-nowrap">{{ escuela.direccion }}</td>
+					<td class="align-middlewhite-space-nowrap">{{ escuela.categoria }}</td>
+					<td class="align-middlewhite-space-nowrap">
+						<button class="btn btn-outline-info" type="button" onclick="mostrarEscuela({{ loop.index0  }})">
+							<i class="fas fa-times"></i>
+							Editar
+						</button>
+						<button class="btn btn-outline-danger" type="button" onclick="elimnarEscuela({{ loop.index0  }})">
+							<i class="fas fa-times"></i>
+							Eliminar
+						</button>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<div class="modal fade" id="escuelaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Información de la Escuela</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div
+					class="modal-body">
+					<!-- Aquí puedes mostrar la información de la escuela -->
+					<div class="row">
+						<div class="col mb-3">
+							<label class="form-label" for="formNombre">Nombre</label>
+							<input class="form-control upper" id="formNombre" type="text"/>
+						</div>
+						<div class="col mb-3">
+							<label class="form-label" for="formDireccion">Direccion</label>
+							<input class="form-control upper" id="formDireccion" type="text"/>
+						</div>
+						<div class="col mb-3">
+							<label class="form-label" for="formCategoria">Categoria</label>
+							<select class="form-control" id="formCategoria">
+								{% for categoria in categoria_escuela %}
+									<option value="{{ categoria.id }}">{{ categoria.nombre }}</option>
+								{% endfor %}
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-outline-primary" type="submit" onclick="guardarEscuela()">Guardar<span class="fas fa-save ms-2" data-fa-transform="shrink-3"></span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	 <script>let escuelas = {{ escuelas | json_encode | raw }};</script>
+{% endblock %}

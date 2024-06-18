@@ -1,0 +1,200 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<head>
+		<title>Jugadores Destacados</title>
+		 <script src="{{ asset('Recursos/jugadores.js') }}"></script>
+	</head>
+	<div class="row p-1 d-flex justify-content-between">
+		<div>
+			<button class="btn btn-outline-warning" type="button">
+				<a class="nav-link" href="/web_proyecto/public/index.php/entrenador/">Regresar</a>
+			</button>
+		</div>
+		<div>
+			<button class="btn btn-outline-info" type="button">
+				<a class="nav-link" href="/web_proyecto/public/index.php/entrenador/login">Cerrar Sesión</a>
+			</button>
+		</div>
+	</div>
+	<div class="justify-content-center text-center">
+		<h1>Listado de Jugadores</h1>
+	</div>
+	<div class="row p-4">
+		<button class="btn btn-outline-success" type="button" onclick="limpiarModal()">
+			<i class="fas fa-times"></i>
+			Nuevo
+		</button>
+	</div>
+	<table class="table table-sm mb-0 data-general fs--1">
+		<thead class="bg-200 text-900">
+			<tr>
+				<th class="sort pe-1 align-middle">#</th>
+				<th class="sort pe-1 align-middle">Apellidos Y Nombres</th>
+				<th class="sort pe-1 align-middle">Genero</th>
+				<th class="sort pe-1 align-middle">Estatura</th>
+				<th class="sort pe-1 align-middle">Peso</th>
+				<th class="sort pe-1 align-middle">Edad</th>
+				<th class="sort pe-1 align-middle">Opciones</th>
+			</tr>
+		</thead>
+		<tbody class="list" id="table-number-pagination-body">
+			{% if jugadores_destacados|length > 0 %}
+				{% for jugador in jugadores_destacados %}
+					<tr class="btn-reveal-trigger" id="tr{{ jugador.id }}">
+						<td class="align-middle white-space-nowrap">{{ loop.index }}</td>
+						<td class="align-middle white-space-nowrap">{{ jugador.nombres }} {{ jugador.apellidos }}</td>
+						<td class="align-middle white-space-nowrap">{{ jugador.genero }}</td>
+						<td class="align-middle white-space-nowrap">{{ jugador.estatura }}</td>
+						<td class="align-middle white-space-nowrap">{{ jugador.peso }}</td>
+						<td class="align-middle white-space-nowrap">{{ jugador.edad }}</td>
+						<td class="align-middle white-space-nowrap">
+							<button class="btn btn-outline-info" type="button" onclick="mostrarJugador({{ loop.index0 }})">
+								<i class="fas fa-times"></i>
+								Editar
+							</button>
+							<button class="btn btn-outline-info" type="button" onclick="mostrarRutinas({{ loop.index0 }})">
+								<i class="fas fa-times"></i>
+								Ver Rutinas
+							</button>
+							<button class="btn btn-outline-danger" type="button" onclick="elimnarJugador({{ loop.index0 }})">
+								<i class="fas fa-times"></i>
+								Eliminar
+							</button>
+						</td>
+					</tr>
+				{% endfor %}
+			{% endif %}
+
+		</tbody>
+	</table>
+
+
+	<div class="modal fade" id="jugadorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Información de jugadores</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col mb-3">
+							<label class="form-label" for="formNombres">Nombres</label>
+							<input class="form-control upper" id="formNombres" type="text"/>
+						</div>
+						<div class="col mb-3">
+							<label class="form-label" for="formApellidos">Apellidos</label>
+							<input class="form-control upper" id="formApellidos" type="text"/>
+						</div>
+						<div class="col mb-3">
+							<label class="form-label" for="formEstatura">Estatura</label>
+							<input class="form-control upper" id="formEstatura" type="numeric"/>
+						</div>
+					</div>
+					<div class="row">
+
+						<div class="col mb-3">
+							<label class="form-label" for="formPeso">Peso</label>
+							<input class="form-control upper" id="formPeso" type="numeric"/>
+						</div>
+						<div class="col mb-3">
+							<label class="form-label" for="formEdad">Edad</label>
+							<input class="form-control upper" id="formEdad" type="numeric"/>
+						</div>
+						<div class="col mb-3">
+							<label class="form-label" for="formGenero">Genero</label>
+							<select class="form-control" id="formGenero">
+								<option value="Hombre">Hombre</option>
+								<option value="Mujer">Mujer</option>
+								<option value="Ninguno">Ninguno</option>
+							</select>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-4 mb-3">
+							<label class="form-label" for="formCategoria">Categoria</label>
+							<select class="form-control" id="formCategoria">
+								<option value="1">U12</option>
+								<option value="2">U13</option>
+								<option value="3">U14</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-outline-primary" type="submit" onclick="guardarJugador()">Guardar<span class="fas fa-save ms-2" data-fa-transform="shrink-3"></span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="modal fade" id="rutinasModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-xl" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Rutinas</h5>
+					<button type="button" class="close" onclick="cerrarAbrirModala('rutinasModal')">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="row">
+					<div class="col mb-3">
+						<h1 id="formNombreJugador"></h1>
+					</div>
+				</div>
+				<div class="modal-body p-3">
+					<div class="row">
+					<div class="col mb-3">
+							<label class="form-label" for="formDia">Dia</label>
+							<select class="form-control" id="formDia">
+								<option value="Lunes">Lunes</option>
+								<option value="Martes">Martes</option>
+								<option value="Miercoles">Miercoles</option>
+								<option value="Jueves">Jueves</option>
+								<option value="Viernes">Viernes</option>
+							</select>
+						</div>
+					<div class="col mb-3">
+							<label class="form-label" for="formNombreRutina">Nombre Rutina</label>
+							<input class="form-control upper" id="formNombreRutina" type="text"/>
+						</div>
+						<div class="col mb-3">
+							<label class="form-label" for="formRepeticiones">repeticiones</label>
+							<input class="form-control upper" id="formRepeticiones" type="numeric"/>
+						</div>
+					</div>
+					<div class="row">
+					<div class="col mb-3">
+					<button class="btn btn-outline-primary" type="submit" onclick="limpiarRutina()">Nueva Rutina<span class="fas fa-save ms-2" data-fa-transform="shrink-3"></span>
+					</button>
+					<button class="btn btn-outline-success" type="submit" onclick="guardarRutina()">Guardar<span class="fas fa-save ms-2" data-fa-transform="shrink-3"></span>
+					</button>
+				</div>
+					</div>
+					<div class="row">
+						<table class="table table-sm mb-0 data-general fs--1" id="rutinasJugdores">
+							<thead class="bg-200 text-900">
+								<tr>
+									<th class="sort pe-1 align-middle">Día</th>
+									<th class="sort pe-1 align-middle">Nombre</th>
+									<th class="sort pe-1 align-middle">Repeticiones</th>
+									<th class="sort pe-1 align-middle">Opciones</th>
+								</tr>
+							</thead>
+							<tbody
+								class="list" id="rutinas">
+							</tbody>
+						</table>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	 <script>let jugadores_destacados = {{ jugadores_destacados | json_encode | raw }};</script>
+{% endblock %}

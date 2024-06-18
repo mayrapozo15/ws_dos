@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<head>
+		<title>Alumnos</title>
+		 <script src="{{ asset('Recursos/alumnos.js') }}"></script>
+	</head>
+	<div class="row p-1 d-flex justify-content-between">
+		<div>
+			<button class="btn btn-outline-warning" type="button">
+				<a class="nav-link" href="/web_proyecto/public/index.php/entrenador">Regresar</a>
+			</button>
+		</div>
+		<div>
+			<button class="btn btn-outline-info" type="button">
+				<a class="nav-link" href="/web_proyecto/public/index.php/login">Cerrar Sesión</a>
+			</button>
+		</div>
+	</div>
+	<div class="justify-content-center text-center">
+		<h1>Listado de Alumnos por edad este caso 12 </h1>
+	</div>
+	<table class="table table-sm mb-0 data-general fs--1">
+		<thead class="bg-200 text-900">
+			<tr>
+				<th class="sort pe-1 align-middle">id</th>
+				<th class="sort pe-1 align-middle">Escuela</th>
+				<th class="sort pe-1 align-middle">Cedula</th>
+				<th class="sort pe-1 align-middle">Apellidos Y Nombres</th>
+				<th class="sort pe-1 align-middle">Genero</th>
+				<th class="sort pe-1 align-middle">Estatura</th>
+				<th class="sort pe-1 align-middle">Peso</th>
+				<th class="sort pe-1 align-middle">Edad</th>
+			</tr>
+		</thead>
+		<tbody class="list" id="table-number-pagination-body">
+			{% if alumnos|length > 0 %}
+				{% for alumno in alumnos %}
+					<tr class="btn-reveal-trigger" id="tr{{ alumno.id }}">
+						<td class="align-middle white-space-nowrap">{{ alumno.id }}</td>
+						<td class="align-middle white-space-nowrap">{{ alumno.categoria }}</td>
+						<td class="align-middle white-space-nowrap">{{ alumno.cedula }}</td>
+						<td class="align-middle white-space-nowrap">{{ alumno.nombres }}</td>
+						<td class="align-middle white-space-nowrap">{{ alumno.apellidos }}</td>
+						<td class="align-middle white-space-nowrap">{{ alumno.genero }}</td>
+						<td class="align-middle white-space-nowrap">{{ alumno.estatura }}</td>
+						<td class="align-middle white-space-nowrap">{{ alumno.peso }}</td>
+					</tr>
+				{% endfor %}
+			{% endif %}
+
+		</tbody>
+	</table>
+{% endblock %}

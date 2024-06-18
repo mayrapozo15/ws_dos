@@ -1,0 +1,200 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<head>
+		<title>Alumnos</title>
+		 <script src="{{ asset('Recursos/alumnos.js') }}"></script>
+	</head>
+	<div class="row p-1 d-flex justify-content-between">
+		<div>
+			<button class="btn btn-outline-warning" type="button">
+				<a class="nav-link" href="/web_proyecto/public/index.php/entrenador">Regresar</a>
+			</button>
+		</div>
+		<div>
+			<button class="btn btn-outline-info" type="button">
+				<a class="nav-link" href="/web_proyecto/public/index.php/login">Cerrar Sesión</a>
+			</button>
+		</div>
+	</div>
+	<div class="justify-content-center text-center">
+		<h1>Listado de Alumnos</h1>
+	</div>
+	<div class="row p-4">
+		<button class="btn btn-outline-success" type="button" onclick="limpiarModal()">
+			<i class="fas fa-times"></i>
+			Nuevo
+		</button>
+	</div>
+	<table class="table table-sm mb-0 data-general fs--1">
+		<thead class="bg-200 text-900">
+			<tr>
+				<th class="sort pe-1 align-middle">#</th>
+				<th class="sort pe-1 align-middle">Escuela</th>
+				<th class="sort pe-1 align-middle">Cedula</th>
+				<th class="sort pe-1 align-middle">Apellidos Y Nombres</th>
+				<th class="sort pe-1 align-middle">Genero</th>
+				<th class="sort pe-1 align-middle">Estatura</th>
+				<th class="sort pe-1 align-middle">Peso</th>
+				<th class="sort pe-1 align-middle">Edad</th>
+				<th class="sort pe-1 align-middle">Opciones</th>
+			</tr>
+		</thead>
+		<tbody class="list" id="table-number-pagination-body">
+			{% if alumnos|length > 0 %}
+				{% for alumno in alumnos %}
+					<tr class="btn-reveal-trigger" id="tr{{ alumno.id }}">
+						<td class="align-middle white-space-nowrap">{{ loop.index }}</td>
+						<td class="align-middle white-space-nowrap">{{ alumno.escuela_nombre }}</td>
+						<td class="align-middle white-space-nowrap">{{ alumno.cedula }}</td>
+						<td class="align-middle white-space-nowrap">{{ alumno.apellidos }}-{{ alumno.nombres }}</td>
+						<td class="align-middle white-space-nowrap">{{ alumno.genero }}</td>
+						<td class="align-middle white-space-nowrap">{{ alumno.estatura }}</td>
+						<td class="align-middle white-space-nowrap">{{ alumno.peso }}</td>
+						<td class="align-middle white-space-nowrap">{{ alumno.edad }}</td>
+						<td class="align-middle white-space-nowrap">
+							<button class="btn btn-outline-info" type="button" onclick="mostrarAlumno({{ loop.index0 }})">
+								<i class="fas fa-times"></i>
+								Editar
+							</button>
+							<button class="btn btn-outline-danger" type="button" onclick="elimnarAlumno({{ loop.index0 }})">
+								<i class="fas fa-times"></i>
+								Eliminar
+							</button>
+						</td>
+					</tr>
+				{% endfor %}
+			{% endif %}
+
+		</tbody>
+	</table>
+
+	<div class="modal fade" id="alumnoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Información del Alumno</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col mb-3">
+							<label class="form-label" for="formEscuela">Escuela</label>
+							<select class="form-control" id="formEscuela">
+								{% if escuelas|length > 0 %}
+									{% for escuela in escuelas %}
+										<option value="{{ escuela.id }}">{{ escuela.nombre }}</option>
+									{% endfor %}
+								{% endif %}
+							</select>
+						</div>
+						<div class="col mb-3">
+							<label class="form-label" for="formCedula">Cedula</label>
+							<input class="form-control upper" id="formCedula" type="text"/>
+						</div>
+						<div class="col mb-3">
+							<label class="form-label" for="formNombres">Nombres</label>
+							<input class="form-control upper" id="formNombres" type="text"/>
+						</div>
+						<div class="col mb-3">
+							<label class="form-label" for="formApellidos">Apellidos</label>
+							<input class="form-control upper" id="formApellidos" type="text"/>
+						</div>
+
+					</div>
+					<div class="row">
+						<div class="col mb-3">
+							<label class="form-label" for="formEstatura">Estatura</label>
+							<input class="form-control upper" id="formEstatura" type="numeric"/>
+						</div>
+						<div class="col mb-3">
+							<label class="form-label" for="formPeso">Peso</label>
+							<input class="form-control upper" id="formPeso" type="numeric"/>
+						</div>
+						<div class="col mb-3">
+							<label class="form-label" for="formEdad">Edad</label>
+							<input class="form-control upper" id="formEdad" type="numeric"/>
+						</div>
+						<div class="col mb-3">
+							<label class="form-label" for="formGenero">Genero</label>
+							<select class="form-control" id="formGenero">
+								<option value="Hombre">Hombre</option>
+								<option value="Mujer">Mujer</option>
+								<option value="Ninguno">Ninguno</option>
+							</select>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-4 mb-3">
+							<label class="form-label" for="formCategoria">Categoria</label>
+							<select class="form-control" id="formCategoria">
+								<option value="1">U12</option>
+								<option value="2">U13</option>
+								<option value="3">U14</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row p-4 d-flex justify-content-evenly">
+					<div class="col">
+						<button class="btn btn-outline-success" type="submit" onclick="guardarAlumno()">Guardar<span class="fas fa-save ms-2" data-fa-transform="shrink-3"></span>
+						</button>
+					</div>
+					<div class="col">
+						<button id="btnRutinas" class="btn btn-outline-primary" type="submit" onclick="mostrarRutinas()">Jugadores Destacados<span class="fas fa-save ms-2" data-fa-transform="shrink-3"></span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{#  #}
+
+	<div class="modal fade" id="jugadoresModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Información jugadores destacados</h5>
+					<button type="button" class="close" onclick="cerrarAbrirModala('jugadoresModal', 'alumnoModal')">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col mb-3">
+							<label class="form-label" for="formJugador">Jugadores Destacados</label>
+							<select class="form-control" id="formJugador" onchange="mostrarRutinas()">
+								{% if jugadores_destacados|length > 0 %}
+									{% for jugador in jugadores_destacados %}
+										<option value="{{ jugador.id }}">{{ jugador.nombres }}
+											-
+											{{ jugador.apellidos }}</option>
+									{% endfor %}
+								{% endif %}
+							</select>
+						</div>
+					</div>
+					<div class="row">
+						<table class="table table-sm mb-0 data-general fs--1">
+							<thead class="bg-200 text-900">
+								<tr>
+									<th class="sort pe-1 align-middle">Día</th>
+									<th class="sort pe-1 align-middle">Rutinas</th>
+								</tr>
+							</thead>
+							<tbody
+								class="list" id="rutinas"><!-- El contenido de las rutinas se llenará dinámicamente -->
+							</tbody>
+						</table>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	 <script>let alumnos = {{ alumnos | json_encode | raw }};</script>
+{% endblock %}

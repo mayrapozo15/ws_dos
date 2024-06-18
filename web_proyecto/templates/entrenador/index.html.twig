@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<head>
+		<title>Bienvenido Entrenador</title>
+		 <script src="{{ asset('Recursos/escuelas.js') }}"></script>
+	</head>
+
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item">
+					<a class="nav-link" href="/web_proyecto/public/index.php/entrenador/alumnos">Alumnos</a>
+				</li>
+			</ul>
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item">
+					<a class="nav-link" href="/web_proyecto/public/index.php/entrenador/jugadores_reporte">Reporte Rutinas</a>
+				</li>
+			</ul>
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item">
+					<a class="nav-link" href="/web_proyecto/public/index.php/entrenador/jugadores">Jugadores Destacados</a>
+				</li>
+			</ul>
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<a class="nav-link" href="/web_proyecto/public/index.php/login">Cerrar Sesión</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<div class="row p-4">
+		{% if datos_entrenador %}
+			<h1> Entrenador: {{ datos_entrenador.nombres }}</h1>
+		{% else %}
+			<p>No hay datos del entrenador disponibles.</p>
+		{% endif %}
+	</div>
+
+{% endblock %}
